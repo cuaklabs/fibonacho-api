@@ -1,0 +1,28 @@
+{
+  "name": "fibonacho-api",
+  "version": "0.0.0",
+  "description": "Fibonacho API",
+  "main": "dist/bin/start.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuaklabs/fibonacho-api.git"
+  },
+  "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
+  "contributors": [
+    "Alberto Fernández <albertofdzm@gmail.com> (http://onlythepixel.com)",
+    "Roberto Pintos López <roberto.pintos.lopez@gmail.com>",
+    "Francisco Aranda <flarandagarcia@gmail.com> (https://flaranda.com)",
+    "Alejandro López Redondo <alejandroj.redondo@gmail.com>",
+    "Santiago Espada <hola@santiespada.dev> (https://santiespada.dev)",
+    "Ricardo Veronese Ricci <ricci.vr@gmail.com> (https://riccivr.github.io/)",
+    "Eduardo Aguilar <eduardoaguilartirado@gmail.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cuaklabs/fibonacho-api/issues"
+  },
+  "homepage": "https://github.com/cuaklabs/fibonacho-api#readme"
+}
