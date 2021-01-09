@@ -1,0 +1,11 @@
+get:
+  security: []
+  tags:
+    - Info
+  responses:
+    200:
+      description: Returns API information
+      content:
+        application/json:
+          schema:
+            $ref: '../../openapi-v1.yml#/components/schemas/ServerInfo.draft'

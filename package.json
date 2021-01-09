@@ -1,0 +1,47 @@
+{
+  "name": "fibonacho-api",
+  "version": "0.0.0",
+  "description": "Fibonacho API",
+  "main": "dist/bin/start.js",
+  "scripts": {
+    "api-docs:start": "docker-compose -f ./api-docs/docker-compose.yml up docs",
+    "api-docs:validate": "docker-compose -f ./api-docs/docker-compose.yml up validator",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuaklabs/fibonacho-api.git"
+  },
+  "author": "Cuak McCuackl <cuak.mccuakl@cuaklabs.com>",
+  "contributors": [
+    "Alberto Fernández <albertofdzm@gmail.com> (http://onlythepixel.com)",
+    "Roberto Pintos López <roberto.pintos.lopez@gmail.com>",
+    "Francisco Aranda <flarandagarcia@gmail.com> (https://flaranda.com)",
+    "Alejandro López Redondo <alejandroj.redondo@gmail.com>",
+    "Santiago Espada <hola@santiespada.dev> (https://santiespada.dev)",
+    "Ricardo Veronese Ricci <ricci.vr@gmail.com> (https://riccivr.github.io/)",
+    "Eduardo Aguilar <eduardoaguilartirado@gmail.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cuaklabs/fibonacho-api/issues"
+  },
+  "homepage": "https://github.com/cuaklabs/fibonacho-api#readme",
+  "devDependencies": {
+    "@types/node": "^14.14.19",
+    "@typescript-eslint/eslint-plugin": "^4.11.1",
+    "@typescript-eslint/parser": "^4.11.1",
+    "eslint": "^7.17.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.3",
+    "husky": "^4.3.6",
+    "jest": "^26.6.3",
+    "lint-staged": "^10.5.3",
+    "prettier": "^2.2.1",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^26.4.4",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  }
+}

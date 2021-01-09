@@ -1,0 +1,15 @@
+ServerInfo:
+  type: object
+  description: Server info
+  properties:
+    name:
+      type: string
+      description: Server name
+      example: fibonacho-api
+    version:
+      type: string
+      description: Project version
+      example: v1.12.56
+  required:
+    - name
+    - version

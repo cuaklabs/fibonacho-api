@@ -1,0 +1,10 @@
+{
+  "deepLinking": true,
+  "docExpansion": "none",
+  "defaultModelRendering": "model",
+  "urls": [
+    { "url": "openapi/openapi-v1.yml", "name": "v1" }
+  ],
+  "urls.primaryName": "v1",
+  "showExtensions": true
+}
