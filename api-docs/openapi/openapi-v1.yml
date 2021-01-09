@@ -1,0 +1,29 @@
+
+openapi: 3.0.3
+
+info:
+  title: Fibonacho API
+  description: Spec for Fibonacho API v1 endpoints
+  version: 'v1'
+
+security: []
+
+tags:
+  - name: Info
+
+paths:
+  /v1.draft/:
+    $ref: './v1/paths/index.draft.yml'
+
+components:
+
+  schemas:
+
+    ServerInfo.draft:
+      $ref: './v1/components/schemas/ServerInfo.draft.yml#/ServerInfo'
+
+  parameters: {}
+
+  responses: {}
+
+  securitySchemes: {}

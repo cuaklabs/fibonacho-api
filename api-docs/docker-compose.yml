@@ -1,0 +1,21 @@
+
+version: '3'
+
+services:
+  docs:
+    container_name: fibonacho_api_docs
+    image: swaggerapi/swagger-ui:v3.38.0
+    environment:
+      CONFIG_URL: swagger-ui.config.json
+    volumes:
+      - ./openapi:/usr/share/nginx/html/openapi
+      - ./swagger-ui.config.json:/usr/share/nginx/html/swagger-ui.config.json
+    ports:
+      - 8080:8080
+
+  validator:
+    container_name: fibonacho_api_docs_validator
+    image: node:12-alpine
+    volumes:
+      - ./openapi:/openapi
+    command: npx swagger-cli validate openapi/openapi-${API_VERSION:-v1}.yml

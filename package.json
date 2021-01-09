@@ -4,6 +4,8 @@
   "description": "Fibonacho API",
   "main": "dist/bin/start.js",
   "scripts": {
+    "api-docs:start": "docker-compose -f ./api-docs/docker-compose.yml up docs",
+    "api-docs:validate": "docker-compose -f ./api-docs/docker-compose.yml up validator",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
