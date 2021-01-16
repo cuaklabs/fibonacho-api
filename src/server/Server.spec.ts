@@ -8,20 +8,37 @@ import express from 'express';
 
 import { Server } from './Server';
 
-class HttpServerMock {}
+class HttpServerMock {
+  public listen: jest.Mock = jest.fn().mockReturnThis();
+  public once: jest.Mock = jest.fn().mockReturnThis();
+}
 
 describe('Server', () => {
+  let expressMock: jest.Mock;
+  let httpServerMock: http.Server;
+  let server: Server;
+
+  beforeAll(() => {
+    expressMock = jest.fn();
+    httpServerMock = (new HttpServerMock() as unknown) as http.Server;
+
+    ((express as unknown) as jest.Mock).mockReturnValue(expressMock);
+    (http.createServer as jest.Mock).mockReturnValue(httpServerMock);
+
+    server = new Server();
+  });
+
   describe('when instantiated', () => {
-    let expressMock: jest.Mock;
     let server: Server;
 
     beforeAll(() => {
-      expressMock = jest.fn();
-
-      ((express as unknown) as jest.Mock).mockReturnValue(expressMock);
-      (http.createServer as jest.Mock).mockReturnValue(new HttpServerMock());
+      jest.clearAllMocks();
 
       server = new Server();
+    });
+
+    afterAll(() => {
+      jest.clearAllMocks();
     });
 
     it('should call express()', () => {
@@ -35,6 +52,31 @@ describe('Server', () => {
 
     it('should have an httpServer property', () => {
       expect(server.httpServer).toBeInstanceOf(HttpServerMock);
+    });
+  });
+
+  describe('.start()', () => {
+    describe('when called', () => {
+      let result: unknown;
+
+      beforeAll(async () => {
+        (httpServerMock.once as jest.Mock).mockImplementationOnce(
+          (_eventName: string, callback: () => void) => {
+            callback();
+          },
+        );
+
+        result = await server.start();
+      });
+
+      it('should call httpServer.listen()', () => {
+        expect(server.httpServer.listen).toHaveBeenCalledTimes(1);
+        expect(server.httpServer.listen).toHaveBeenCalledWith(3000);
+      });
+
+      it('should return nothing', () => {
+        expect(result).toBeUndefined();
+      });
     });
   });
 });
