@@ -1,12 +1,14 @@
 import { Container, ContainerModule } from 'inversify';
 
 import { Factory } from '../common/modules/Factory';
+import { EnvVariablesLoaderContainerModule } from '../env-variables-loader/inversify/EnvVariablesLoaderContainerModule';
 import { ServerContainerModule } from '../server/inversify/ServerContainerModule';
 
 type ContainerModuleConstructor = new () => ContainerModule;
 
 export class InversifyContainerFactory implements Factory<Container> {
   private readonly defaultContainerModulesToLoad: ContainerModuleConstructor[] = [
+    EnvVariablesLoaderContainerModule,
     ServerContainerModule,
   ];
 

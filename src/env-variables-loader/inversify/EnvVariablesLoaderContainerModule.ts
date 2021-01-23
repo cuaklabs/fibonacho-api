@@ -3,7 +3,7 @@ import { ContainerModule, interfaces } from 'inversify';
 import { EnvVariablesLoader } from '../EnvVariablesLoader';
 import { envVariablesLoaderInjectionTypes } from './envVariablesLoaderInjectionTypes';
 
-export class ServerContainerModule extends ContainerModule {
+export class EnvVariablesLoaderContainerModule extends ContainerModule {
   constructor() {
     const registry: interfaces.ContainerModuleCallBack = (
       bind: interfaces.Bind,
