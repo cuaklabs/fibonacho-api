@@ -1,13 +1,23 @@
 import 'reflect-metadata';
 
-jest.mock('inversify');
+import { Container, ContainerModule, injectable, interfaces } from 'inversify';
 
-import { Container } from 'inversify';
-
-jest.mock('../server/inversify/ServerContainerModule');
-
-import { ServerContainerModule } from '../server/inversify/ServerContainerModule';
 import { InversifyContainerFactory } from './InversifyContainerFactory';
+
+@injectable()
+class ModuleMock {}
+
+class ContainerModuleMock extends ContainerModule {
+  constructor() {
+    const registry: interfaces.ContainerModuleCallBack = (
+      bind: interfaces.Bind,
+    ): void => {
+      bind(ModuleMock).to(ModuleMock);
+    };
+
+    super(registry);
+  }
+}
 
 describe('InversifyContainerFactory', () => {
   let inversifyContainerFactory: InversifyContainerFactory;
@@ -19,27 +29,16 @@ describe('InversifyContainerFactory', () => {
   describe('.create()', () => {
     describe('when called', () => {
       let result: unknown;
-      let containerMock: Container;
 
       beforeAll(async () => {
-        containerMock = ({
-          load: jest.fn(),
-        } as Partial<Container>) as Container;
-
-        ((Container as unknown) as jest.Mock).mockReturnValue(containerMock);
-        result = await inversifyContainerFactory.create();
+        result = await inversifyContainerFactory.create([ContainerModuleMock]);
       });
 
-      it('should load ServerContainerModule', () => {
-        expect(ServerContainerModule).toHaveBeenCalledTimes(1);
-        expect(
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          (containerMock.load as jest.Mock).mock.calls[0][0],
-        ).toBeInstanceOf(ServerContainerModule);
-      });
+      it('should return a inversify.Container instance with ContainerModuleMock loaded', () => {
+        const expected: unknown = (result as Container).get(ModuleMock);
 
-      it('should return a inversify.Container instance', () => {
-        expect(result).toStrictEqual(containerMock);
+        expect(result).toBeInstanceOf(Container);
+        expect(expected).toBeInstanceOf(ModuleMock);
       });
     });
   });
