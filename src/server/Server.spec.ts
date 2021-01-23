@@ -70,8 +70,12 @@ describe('Server', () => {
       });
 
       it('should call httpServer.listen()', () => {
+        const expectedPort: number = 3000;
+
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(server.httpServer.listen).toHaveBeenCalledTimes(1);
-        expect(server.httpServer.listen).toHaveBeenCalledWith(3000);
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        expect(server.httpServer.listen).toHaveBeenCalledWith(expectedPort);
       });
 
       it('should return nothing', () => {
