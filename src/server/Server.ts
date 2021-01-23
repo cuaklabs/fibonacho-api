@@ -1,24 +1,31 @@
 import http from 'http';
 
 import express from 'express';
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
+
+import { serverInjectionTypes } from './inversify/serverInjectionTypes';
+import { ServerConfig } from './ServerConfig';
 
 @injectable()
 export class Server {
   public readonly httpServer: http.Server;
-
   private readonly expressServer: express.Express;
 
-  constructor() {
+  constructor(
+    @inject(serverInjectionTypes.ServerConfig)
+    private readonly serverConfig: ServerConfig,
+  ) {
     this.expressServer = express();
 
     this.httpServer = http.createServer(this.expressServer);
   }
 
   public async start(): Promise<void> {
-    await this.startHttpServer(3000);
+    await this.startHttpServer(this.serverConfig.port);
 
-    console.log('Server started');
+    console.log(
+      `Server running and listening on port ${this.serverConfig.port}`,
+    );
   }
 
   private async startHttpServer(port: number): Promise<void> {
