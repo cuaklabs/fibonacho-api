@@ -21,6 +21,7 @@ export class EnvVariablesLoader {
   private readonly envalidValidators: {
     [TKey in keyof EnvVariables]: envalid.ValidatorSpec<EnvVariables[TKey]>;
   } = {
+    ENV_DOTENV_NAME: envalid.str({ default: '' }),
     SERVER_PORT: envalid.port(),
   };
 
@@ -77,6 +78,7 @@ export class EnvVariablesLoader {
 
   private setVariables(env: EnvVariables): void {
     this.variables = {
+      ENV_DOTENV_NAME: env.ENV_DOTENV_NAME,
       SERVER_PORT: env.SERVER_PORT,
     };
   }
