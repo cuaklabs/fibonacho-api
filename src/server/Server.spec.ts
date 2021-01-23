@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 jest.mock('http');
 
 import http from 'http';

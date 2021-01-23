@@ -1,7 +1,9 @@
 import http from 'http';
 
 import express from 'express';
+import { injectable } from 'inversify';
 
+@injectable()
 export class Server {
   public readonly httpServer: http.Server;
 

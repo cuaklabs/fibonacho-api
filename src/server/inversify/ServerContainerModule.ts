@@ -1,11 +1,14 @@
 import { ContainerModule, interfaces } from 'inversify';
 
+import { Server } from '../Server';
+import { serverInjectionTypes } from './serverInjectionTypes';
+
 export class ServerContainerModule extends ContainerModule {
   constructor() {
     const registry: interfaces.ContainerModuleCallBack = (
-      _bind: interfaces.Bind,
+      bind: interfaces.Bind,
     ): void => {
-      throw new Error('No modules registered');
+      bind(serverInjectionTypes.Server).to(Server);
     };
 
     super(registry);
