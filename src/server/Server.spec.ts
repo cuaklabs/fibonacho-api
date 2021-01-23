@@ -8,7 +8,9 @@ jest.mock('express', () => jest.fn());
 
 import express from 'express';
 
+import { EnvVariablesFixtures } from '../env-variables-loader/fixtures/EnvVariablesFixtures';
 import { Server } from './Server';
+import { ServerConfig } from './ServerConfig';
 
 class HttpServerMock {
   public listen: jest.Mock = jest.fn().mockReturnThis();
@@ -19,15 +21,20 @@ describe('Server', () => {
   let expressMock: jest.Mock;
   let httpServerMock: http.Server;
   let server: Server;
+  let serverConfig: ServerConfig;
 
   beforeAll(() => {
     expressMock = jest.fn();
     httpServerMock = (new HttpServerMock() as unknown) as http.Server;
 
+    serverConfig = ({
+      port: EnvVariablesFixtures.withAll.SERVER_PORT,
+    } as Partial<ServerConfig>) as ServerConfig;
+
     ((express as unknown) as jest.Mock).mockReturnValue(expressMock);
     (http.createServer as jest.Mock).mockReturnValue(httpServerMock);
 
-    server = new Server();
+    server = new Server(serverConfig);
   });
 
   describe('when instantiated', () => {
@@ -36,7 +43,7 @@ describe('Server', () => {
     beforeAll(() => {
       jest.clearAllMocks();
 
-      server = new Server();
+      server = new Server(serverConfig);
     });
 
     afterAll(() => {
