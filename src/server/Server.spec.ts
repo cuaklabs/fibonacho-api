@@ -12,27 +12,39 @@ import { EnvVariablesFixtures } from '../env-variables-loader/fixtures/EnvVariab
 import { Server } from './Server';
 import { ServerConfig } from './ServerConfig';
 
-class HttpServerMock {
-  public listen: jest.Mock = jest.fn().mockReturnThis();
-  public once: jest.Mock = jest.fn().mockReturnThis();
-}
-
 describe('Server', () => {
   let expressMock: jest.Mock;
-  let httpServerMock: http.Server;
+  let httpServer: jest.Mocked<http.Server>;
   let server: Server;
   let serverConfig: ServerConfig;
 
   beforeAll(() => {
     expressMock = jest.fn();
-    httpServerMock = (new HttpServerMock() as unknown) as http.Server;
+    httpServer = ({
+      close: jest
+        .fn()
+        .mockImplementation((callback?: (err?: Error) => void) => {
+          if (callback !== undefined) {
+            callback();
+          }
+
+          return httpServer;
+        }),
+      listen: jest.fn().mockReturnThis(),
+      once: jest
+        .fn()
+        .mockImplementation((_eventName: string, callback: () => void) => {
+          callback();
+          return httpServer;
+        }),
+    } as Partial<http.Server>) as jest.Mocked<http.Server>;
 
     serverConfig = ({
       port: EnvVariablesFixtures.withAll.SERVER_PORT,
     } as Partial<ServerConfig>) as ServerConfig;
 
     ((express as unknown) as jest.Mock).mockReturnValue(expressMock);
-    (http.createServer as jest.Mock).mockReturnValue(httpServerMock);
+    (http.createServer as jest.Mock).mockReturnValue(httpServer);
 
     server = new Server(serverConfig);
   });
@@ -60,7 +72,7 @@ describe('Server', () => {
     });
 
     it('should have an httpServer property', () => {
-      expect(server.httpServer).toBeInstanceOf(HttpServerMock);
+      expect(server.httpServer).toStrictEqual(httpServer);
     });
   });
 
@@ -69,26 +81,30 @@ describe('Server', () => {
       let result: unknown;
 
       beforeAll(async () => {
-        (httpServerMock.once as jest.Mock).mockImplementationOnce(
-          (_eventName: string, callback: () => void) => {
-            callback();
-          },
-        );
-
         result = await server.start();
       });
 
       it('should call httpServer.listen()', () => {
         const expectedPort: number = 3000;
 
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(server.httpServer.listen).toHaveBeenCalledTimes(1);
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         expect(server.httpServer.listen).toHaveBeenCalledWith(expectedPort);
       });
 
       it('should return nothing', () => {
         expect(result).toBeUndefined();
+      });
+    });
+  });
+
+  describe('.close()', () => {
+    describe('when called', () => {
+      beforeAll(async () => {
+        await server.stop();
+      });
+
+      it('should call httpServer.close()', () => {
+        expect(server.httpServer.close).toHaveBeenCalledTimes(1);
       });
     });
   });
