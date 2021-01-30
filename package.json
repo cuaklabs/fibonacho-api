@@ -7,8 +7,8 @@
     "api-docs:start": "docker-compose -f ./api-docs/docker-compose.yml up docs",
     "api-docs:validate": "docker-compose -f ./api-docs/docker-compose.yml up validator",
     "build": "tsc",
-    "start": "ts-node src/bin/start-server",
-    "start:dist": "node dist/bin/start-server",
+    "start": "ts-node src/bin/server-start",
+    "start:dist": "node dist/bin/server-start",
     "test": "jest"
   },
   "repository": {
