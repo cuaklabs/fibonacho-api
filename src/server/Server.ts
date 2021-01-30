@@ -28,6 +28,10 @@ export class Server {
     );
   }
 
+  public async stop(): Promise<void> {
+    await this.stopHttpServer();
+  }
+
   private async startHttpServer(port: number): Promise<void> {
     return new Promise(
       (
@@ -38,6 +42,23 @@ export class Server {
           .listen(port)
           .once('listening', resolve)
           .once('error', reject);
+      },
+    );
+  }
+
+  private async stopHttpServer(): Promise<void> {
+    return new Promise(
+      (
+        resolve: (value: void | PromiseLike<void>) => void,
+        reject: (reason?: unknown) => void,
+      ): void => {
+        this.httpServer.close((err: Error | undefined): void => {
+          if (err === undefined) {
+            resolve();
+          } else {
+            reject(err);
+          }
+        });
       },
     );
   }
