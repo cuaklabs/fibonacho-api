@@ -1,6 +1,6 @@
 import { Container } from 'inversify';
 
-import { InversifyContainerFactory } from '../../inversify/InversifyContainerFactory';
+import { InversifyContainerBuilder } from '../../inversify/InversifyContainerBuilder';
 
 export abstract class Script {
   protected container!: Container;
@@ -11,9 +11,9 @@ export abstract class Script {
   }
 
   protected async initialize(): Promise<void> {
-    const inversifyContainerFactory: InversifyContainerFactory = new InversifyContainerFactory();
+    const inversifyContainerBuilder: InversifyContainerBuilder = new InversifyContainerBuilder();
 
-    this.container = await inversifyContainerFactory.create();
+    this.container = await inversifyContainerBuilder.build();
   }
 
   protected abstract execute(): Promise<void>;

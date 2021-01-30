@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { Container, ContainerModule, injectable, interfaces } from 'inversify';
 
-import { InversifyContainerFactory } from './InversifyContainerFactory';
+import { InversifyContainerBuilder } from './InversifyContainerBuilder';
 
 @injectable()
 class ModuleMock {}
@@ -19,19 +19,19 @@ class ContainerModuleMock extends ContainerModule {
   }
 }
 
-describe('InversifyContainerFactory', () => {
-  let inversifyContainerFactory: InversifyContainerFactory;
+describe('InversifyContainerBuilder', () => {
+  let inversifyContainerBuilder: InversifyContainerBuilder;
 
   beforeAll(() => {
-    inversifyContainerFactory = new InversifyContainerFactory();
+    inversifyContainerBuilder = new InversifyContainerBuilder();
   });
 
-  describe('.create()', () => {
+  describe('.build()', () => {
     describe('when called', () => {
       let result: unknown;
 
       beforeAll(async () => {
-        result = await inversifyContainerFactory.create([ContainerModuleMock]);
+        result = await inversifyContainerBuilder.build([ContainerModuleMock]);
       });
 
       it('should return a inversify.Container instance with ContainerModuleMock loaded', () => {

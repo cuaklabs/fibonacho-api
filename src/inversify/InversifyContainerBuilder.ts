@@ -1,18 +1,18 @@
 import { Container, ContainerModule } from 'inversify';
 
-import { Factory } from '../common/modules/Factory';
+import { Builder } from '../common/modules/Builder';
 import { EnvVariablesLoaderContainerModule } from '../env-variables-loader/inversify/EnvVariablesLoaderContainerModule';
 import { ServerContainerModule } from '../server/inversify/ServerContainerModule';
 
 type ContainerModuleConstructor = new () => ContainerModule;
 
-export class InversifyContainerFactory implements Factory<Container> {
+export class InversifyContainerBuilder implements Builder<Container> {
   private readonly defaultContainerModulesToLoad: ContainerModuleConstructor[] = [
     EnvVariablesLoaderContainerModule,
     ServerContainerModule,
   ];
 
-  public async create(
+  public async build(
     containerModuleConstructors: ContainerModuleConstructor[] = this
       .defaultContainerModulesToLoad,
   ): Promise<Container> {
