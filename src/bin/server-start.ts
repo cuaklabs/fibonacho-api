@@ -7,11 +7,15 @@ import { serverInjectionTypes } from '../server/inversify/serverInjectionTypes';
 import { Server } from '../server/Server';
 
 class StartServerScript extends Script {
-  private server!: Server;
+  private readonly server: Server;
 
-  protected async execute() {
+  constructor() {
+    super();
+
     this.server = this.container.get(serverInjectionTypes.Server);
+  }
 
+  public async run(): Promise<void> {
     await this.server.start();
 
     process.once(
