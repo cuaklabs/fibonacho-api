@@ -9,7 +9,8 @@
     "build": "tsc",
     "start": "ts-node src/bin/server-start",
     "start:dist": "node dist/bin/server-start",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
