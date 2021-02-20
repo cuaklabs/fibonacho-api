@@ -12,33 +12,31 @@ export class InversifyContainerBuilder implements Builder<Container> {
     ServerContainerModule,
   ];
 
-  public async build(
+  public build(
     containerModuleConstructors: ContainerModuleConstructor[] = this
       .defaultContainerModulesToLoad,
-  ): Promise<Container> {
+  ): Container {
     const container: Container = new Container();
 
-    await this.initialize(container, containerModuleConstructors);
+    this.initialize(container, containerModuleConstructors);
 
     return container;
   }
 
-  private async initialize(
+  private initialize(
     container: Container,
     containerModuleConstructors: ContainerModuleConstructor[],
-  ): Promise<void> {
-    const loadContainerModulePromises: Promise<void>[] = containerModuleConstructors.map(
+  ): void {
+    containerModuleConstructors.map(
       async (containerModuleConstructor: ContainerModuleConstructor) =>
         this.loadContainerModule(container, containerModuleConstructor),
     );
-
-    await Promise.all(loadContainerModulePromises);
   }
 
-  private async loadContainerModule(
+  private loadContainerModule(
     container: Container,
     containerModuleConstructor: ContainerModuleConstructor,
-  ): Promise<void> {
+  ): void {
     const containerModule: ContainerModule = new containerModuleConstructor();
 
     container.load(containerModule);

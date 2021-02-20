@@ -13,7 +13,7 @@ export abstract class Script {
   protected async initialize(): Promise<void> {
     const inversifyContainerBuilder: InversifyContainerBuilder = new InversifyContainerBuilder();
 
-    this.container = await inversifyContainerBuilder.build();
+    this.container = inversifyContainerBuilder.build();
   }
 
   protected abstract execute(): Promise<void>;
