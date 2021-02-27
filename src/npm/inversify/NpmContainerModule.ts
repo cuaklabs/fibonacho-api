@@ -1,11 +1,16 @@
 import { ContainerModule, interfaces } from 'inversify';
 
+import { PackageInfoNpmTypeGuard } from '../type-guards/npm/PackageInfoNpmTypeGuard';
+import { npmInjectionTypes } from './npmInjectionTypes';
+
 export class NpmContainerModule extends ContainerModule {
   constructor() {
     const registry: interfaces.ContainerModuleCallBack = (
-      _bind: interfaces.Bind,
+      bind: interfaces.Bind,
     ): void => {
-      return;
+      bind(npmInjectionTypes.PackageInfoNpmTypeGuard)
+        .to(PackageInfoNpmTypeGuard)
+        .inSingletonScope();
     };
 
     super(registry);
