@@ -1,11 +1,15 @@
 import { ContainerModule, interfaces } from 'inversify';
+import { GetServerInfoNpmAdapter } from '../adapters/npm/GetServerInfoNpmAdapter';
+import { serverInfoInjectionTypes } from './serverInfoInjectionTypes';
 
 export class ServerInfoContainerModule extends ContainerModule {
   constructor() {
     const registry: interfaces.ContainerModuleCallBack = (
-      _bind: interfaces.Bind,
+      bind: interfaces.Bind,
     ): void => {
-      return;
+      bind(serverInfoInjectionTypes.GetServerInfoNpmAdapter).to(
+        GetServerInfoNpmAdapter,
+      );
     };
 
     super(registry);
