@@ -1,0 +1,13 @@
+{
+  "$id": "UserApiV1AddressSchema",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "properties": {
+    "country": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "country"
+  ]
+}
