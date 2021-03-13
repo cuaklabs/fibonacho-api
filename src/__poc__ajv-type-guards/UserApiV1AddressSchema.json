@@ -1,5 +1,5 @@
 {
-  "$id": "UserApiV1AddressSchema",
+  "$id": "UserApiV1Address",
   "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "properties": {
