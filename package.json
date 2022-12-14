@@ -53,7 +53,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "envalid": "^6.0.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "inversify": "^5.0.5",
     "reflect-metadata": "^0.1.13",
     "superstruct": "^0.14.2"
